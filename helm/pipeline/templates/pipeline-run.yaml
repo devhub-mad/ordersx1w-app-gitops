@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: {{ .Values.app.name }}-pipeline-run
+  labels:
+    type: pipeline
+    backstage.io/kubernetes-id: {{ .Values.app.name }}
+    tekton.dev/pipeline: {{ .Values.app.name }}
+spec:
+  pipelineRef:
+    name: {{ .Values.app.name }}
+  params:
+    - name: target-namespace
+      value: {{ .Values.app.namespace }}
+  workspaces:
+    - name: maven-settings
+      emptyDir: {}
+    - name: shared-workspace
+      persistentvolumeclaim:
+        claimName: {{ .Values.app.name }}-maven-local-m2-pvc
+    - name: maven-local-m2
+      persistentvolumeclaim:
+        claimName: {{ .Values.app.name }}-maven-local-m2-pvc

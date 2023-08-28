@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ordersx1w-app-repo
+  namespace: devhub
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: https://github.com/devhub-mad/ordersx1w-app-gitops

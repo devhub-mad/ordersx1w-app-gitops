@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+spec:
+  ports:
+  - name: {{ .Values.applicationName }}
+    port: {{ .Values.port }}
+    targetPort: {{ .Values.targetPort }}
+  selector:
+    deployment: {{ .Values.applicationName }}
+metadata:
+  name: {{ .Values.applicationName }}
+  labels:
+    {{- include "quarkus-backend.labels" . | nindent 4 }}
+  annotations:
+    description: The web server's http port
